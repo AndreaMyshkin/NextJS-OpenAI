@@ -7,6 +7,7 @@ import { faCoins } from "@fortawesome/free-solid-svg-icons";
 
 export const AppLayout = ({ children }) => {
   const { user } = useUser();
+
   return (
     <div className="grid grid-cols-[300px_1fr] h-screen max-h-screen">
       <div className="flex flex-col text-white overflow-hidden">

@@ -1,8 +1,11 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { AppLayout } from "../../components/AppLayout";
 import { useState } from "react";
+import { useRouter } from 'next/router';
+import { getAppProps } from "../../utils/getAppProps";
 export default function NewPost() {
-  const [postContent, setPostContent] = useState("");
+  const router = useRouter();
+
   const [topic, setTopic] = useState("");
   const [keywords, setKeywords] = useState("");
 
@@ -15,8 +18,10 @@ export default function NewPost() {
       },
       body: JSON.stringify({ keywords, topic }),
     });
-    const json = await response.json();
-    setPostContent(json.post.postContent);
+    const { postId } = await response.json();
+    if(postId){
+        router.push(`/posts/${postId}`)
+    }
   };
   
   return (
@@ -51,7 +56,7 @@ export default function NewPost() {
           />
         </div>
       </form>
-      <div dangerouslySetInnerHTML={{ __html: postContent }}></div>
+     
     </div>
   );
 }
@@ -59,8 +64,14 @@ export default function NewPost() {
 NewPost.getLayout = function getLayout(page, pageProps) {
   return <AppLayout {...pageProps}>{page}</AppLayout>;
 };
-export const getServerSideProps = withPageAuthRequired(async () => {
-  return {
-    props: {},
-  };
+
+
+export const getServerSideProps = withPageAuthRequired({
+  async getServerSideProps(context) {
+    const props = await getAppProps(context)
+    return {
+      props
+    
+    }
+  }
 });

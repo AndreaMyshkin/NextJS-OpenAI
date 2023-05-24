@@ -131,8 +131,9 @@ console.log({parsed})
     created: new Date(),
 
   })
+  console.log({post})
 
   res.status(200).json({
-    post: parsed,
+    postId: post.insertedId,
   });
 })

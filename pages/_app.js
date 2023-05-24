@@ -1,7 +1,8 @@
 import "../styles/globals.css";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import {Nanum_Pen_Script, Open_Sans} from '@next/font/google';
-
+import {config} from '@fortawesome/fontawesome-svg-core';
+config.autoAddCss = false;
 
 const nanum = Nanum_Pen_Script({ 
     weight: ['400'],
